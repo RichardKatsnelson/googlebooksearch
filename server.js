@@ -10,15 +10,15 @@ app.use(express.json())
 
 // Serves static assets
 if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(__dirname + '/client/build'))
+    app.use(express.static(__dirname + '/client/build'))
 }
 
 // API routes
 app.use(routes)
 
 // Mongo DB Connection
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/googlebooks')
+mongoose.connect(process.env.MONGODB_URI || 'mongodb+srv:/master:master!@cluster0.jr2zh.mongodb.net/googlebooksearch?retryWrites=true&w=majoritys')
 
 app.listen(PORT, () => {
-  console.log(`API server now on port:${PORT}`)
+    console.log(`API server now on port:${PORT}`)
 })
