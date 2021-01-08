@@ -1,0 +1,48 @@
+.navbar {
+    background-image: url('https://miro.medium.com/max/7750/0*Q_aOmiYtvNe9wQnx');
+    width: 100%;
+    background-position: 100%;
+    padding: 15rem 10%;
+}
+
+.booksoulhug {
+    background-color: #080504;
+    padding: 10px;
+    border-radius: 5px;
+    border: 0;
+    margin: 5px;
+}
+
+.booksoul {
+    font-size: 18px;
+    letter-spacing: .25em;
+    color: rgb(17, 10, 39);
+    background-color: #aeb193;
+    padding: 10px;
+    border-radius: 5px;
+    font-family: 'Quicksand', sans-serif;
+    margin-bottom: 0px;
+}
+
+.nav-link {
+    text-decoration: none;
+    letter-spacing: .25em;
+    color: black;
+    background-color: #7794A6;
+    font-family: 'Quicksand', sans-serif;
+    text-transform: uppercase;
+    padding: 10px;
+    outline: none;
+    border: 0;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    box-shadow: inset 0 0 0 var(--border-size) currentcolor;
+    transition: background .8s ease;
+}
+
+a:hover {
+    text-decoration: none;
+    background: #91AA9D;
+    color: black;
+}

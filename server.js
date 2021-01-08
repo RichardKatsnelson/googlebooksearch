@@ -1,26 +1,24 @@
-const express = require("express");
-const mongoose = require("mongoose");
-const routes = require("./routes");
-const app = express();
-const PORT = process.env.PORT || 3001;
+const express = require('express')
+const mongoose = require('mongoose')
+const routes = require('./routes')
+const app = express()
+const PORT = process.env.PORT || 3001
 
-// Define middleware here
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
-// Serve up static assets (usually on heroku)
-if (process.env.NODE_ENV === "production") {
-    app.use(express.static("client/build"));
+// Define middleware
+app.use(express.urlencoded({ extended: true }))
+app.use(express.json())
+
+// Serves static assets
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(__dirname + '/client/build'))
 }
-// Add routes, both API and view
-app.use(routes);
 
-// Connect to MongoDB
-let MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/googlebooks";
+// API routes
+app.use(routes)
 
-mongoose.Promise = Promise;
-mongoose.connect(MONGODB_URI, { useNewUrlParser: true });
+// Mongo DB Connection
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/googlebooks')
 
-// Start the API server
-app.listen(PORT, function() {
-    console.log(`🌎  ==> API Server now listening on PORT ${PORT}!`);
-});
+app.listen(PORT, () => {
+  console.log(`API server now on port:${PORT}`)
+})
