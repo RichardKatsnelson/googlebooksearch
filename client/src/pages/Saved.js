@@ -1,83 +1,79 @@
 import React, { Component } from "react";
-import Jumbotron from "../components/Jumbotron";
+import Container from "../components/Container";
+import Row from "../components/Row";
+import Col from "../components/Col";
 import Card from "../components/Card";
-import Book from "../components/Book";
-import Footer from "../components/Footer";
+import SavedBookDetail from "../components/SavedBookDetail";
 import API from "../utils/API";
-import { Col, Row, Container } from "../components/Grid";
-import { List } from "../components/List";
 
-class Saved extends Component {
-  state = {
-    books: []
-  };
+class SavedBooks extends Component {
+    state = {
+        books: []
+    };
 
-  componentDidMount() {
-    this.getSavedBooks();
-  }
+    // grab the books from /api/books
+    componentDidMount() {
+        API.getBooks()
+            .then(res => this.setState({
+                    books: res.data
+                },
+                console.log(res.data)
+            ))
+            .catch(err => console.log(err));
+    }
 
-  getSavedBooks = () => {
-    API.getSavedBooks()
-      .then(res =>
-        this.setState({
-          books: res.data
-        })
-      )
-      .catch(err => console.log(err));
-  };
+    // loads all books
+    loadBooks = () => {
+        API.getBooks()
+            .then(res =>
+                this.setState({ books: res.data })
+            )
+            .catch(err => console.log(err));
+    };
 
-  handleBookDelete = id => {
-    API.deleteBook(id).then(res => this.getSavedBooks());
-  };
+    // deletes a book
+    handleDeleteBook = id => {
+        API.deleteBook(id)
+            .then(res => this.loadBooks())
+            .catch(err => console.log(err));
+    }
 
-  render() {
-    return (
-      <Container>
-        <Row>
-          <Col size="md-12">
-            <Jumbotron>
-              <h1 className="text-center">
-                <strong>(React) Google Books Search</strong>
-              </h1>
-              <h2 className="text-center">Search for and Save Books of Interest.</h2>
-            </Jumbotron>
-          </Col>
-        </Row>
-        <Row>
-          <Col size="md-12">
-            <Card title="Saved Books" icon="download">
-              {this.state.books.length ? (
-                <List>
-                  {this.state.books.map(book => (
-                    <Book
-                      key={book._id}
-                      title={book.title}
-                      subtitle={book.subtitle}
-                      link={book.link}
-                      authors={book.authors.join(", ")}
-                      description={book.description}
-                      image={book.image}
-                      Button={() => (
-                        <button
-                          onClick={() => this.handleBookDelete(book._id)}
-                          className="btn btn-danger ml-2"
-                        >
-                          Delete
-                        </button>
-                      )}
-                    />
-                  ))}
-                </List>
-              ) : (
-                <h2 className="text-center">No Saved Books</h2>
-              )}
-            </Card>
-          </Col>
-        </Row>
-        <Footer />
-      </Container>
-    );
-  }
+    render() {
+        return ( <
+            Container >
+            <
+            Row >
+            <
+            Col size = "md-12" > {
+                this.state.books.length ? ( <
+                    Card heading = "Saved Books" > {
+                        this.state.books.map(book => ( <
+                            SavedBookDetail key = { book._id }
+                            src = {
+                                book ?
+                                book.src :
+                                    "http://icons.iconarchive.com/icons/paomedia/small-n-flat/128/book-icon.png"
+                            }
+                            title = { book.title }
+                            authors = { book.authors.join(", ") }
+                            date = { book.date }
+                            description = { book.description }
+                            link = { book.link }
+                            handleDeleteBook = {
+                                () => this.handleDeleteBook(book._id) }
+                            />
+                        ))
+                    } <
+                    /Card>
+                ) : ( <
+                    Card heading = "Saved Books" > < /Card>
+                )
+            } <
+            /Col> <
+            /Row> <
+            /Container>
+        );
+    }
 }
 
-export default Saved;
+export default SavedBooks;
